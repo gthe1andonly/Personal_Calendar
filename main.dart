@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 void main() => runApp(MaterialApp(
   home: Home(),
@@ -67,6 +68,12 @@ class Home extends StatelessWidget{
 
               children: <Widget>[
                 Flexible(
+
+                  child: GestureDetector(
+                    onTap:() {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => EmptyCalendar()));
+                    },
                   child: Container(
 
                     padding: EdgeInsets.fromLTRB(50,30, 50, 30),
@@ -76,8 +83,15 @@ class Home extends StatelessWidget{
                       style: TextStyle(fontFamily: 'Liu', fontSize: 14),
                     ),
                   ),
+                  )
                 ),
                 Flexible(
+                  child: GestureDetector(
+                  onTap:() {
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EmptyCalendar()));
+                  }
+                  ,
                   child:  Container(
                     padding: EdgeInsets.fromLTRB(50,30, 50, 30),
                     alignment: Alignment.bottomCenter,
@@ -87,7 +101,7 @@ class Home extends StatelessWidget{
                     ),
                   ),
                 ),
-
+                ),
               ],
             ),
           ),
@@ -268,6 +282,89 @@ class NextTask extends StatelessWidget{
     );
   }
 }
-class EmptyCalendar{
-  
+class EmptyCalendar extends StatefulWidget{
+  @override
+  EmptyCalendarState createState() => EmptyCalendarState();
+}
+class EmptyCalendarState extends State<EmptyCalendar>{
+  CalendarController _controller;
+  @override
+  void initState(){
+    super.initState();
+    _controller = CalendarController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TableCalendar(
+              calendarStyle: CalendarStyle(
+                todayColor: Colors.purpleAccent,
+                selectedColor: Theme.of(context).accentColor,
+                todayStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                ),
+              ),
+              headerStyle: HeaderStyle(
+                centerHeaderTitle: true,
+                formatButtonDecoration: BoxDecoration(
+                  color: Colors.greenAccent,
+                  borderRadius: BorderRadius.circular(21.0),
+                ),
+                formatButtonTextStyle: TextStyle(
+                  color: Colors.black12,
+                ),
+                formatButtonShowsNext: false,
+              ),
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              onDaySelected: (date, events){
+                print(date.toIso8601String());
+              },
+              builders: CalendarBuilders(
+                selectedDayBuilder: (context, date, events) =>
+              Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  shape: BoxShape.rectangle
+                ),
+                child: Text(date.day.toString(), style: TextStyle
+                  (color: Colors.yellowAccent),),
+              ),
+                todayDayBuilder: (context, date, events) =>
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(5, 2.5, 4, 3),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        shape: BoxShape.circle
+                      ),
+                      child: Text(date.day.toString(), style: TextStyle
+                        (color: Colors.yellowAccent),),
+                    ),
+              ),
+              calendarController: _controller,),
+            Column(
+              children: <Widget>[
+                RaisedButton(
+                  child: Text('Home'),
+                  onPressed:(){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=> Home()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
