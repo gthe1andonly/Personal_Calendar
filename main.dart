@@ -44,6 +44,11 @@ class Home extends StatelessWidget{
           ),
           Flexible(
             flex: 3,
+            child: GestureDetector(
+              onTap:() {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EnterTask()));
+              },
             child: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(20,50, 20, 50),
@@ -51,6 +56,7 @@ class Home extends StatelessWidget{
               child: Text('Add New Task!',
                 style: TextStyle(fontFamily: 'Liu', fontSize: 20),
               ),
+             ),
             ),
           ),
           Flexible(
@@ -120,7 +126,7 @@ class CurrentTasks extends StatelessWidget {
   Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('My Personal Calender223',
+          title: Text('My Personal Calender',
             style: TextStyle(fontFamily: 'Liu'),
           ),
           centerTitle: true,
@@ -158,7 +164,7 @@ class CurrentTasks extends StatelessWidget {
             Column(
               children: <Widget>[
                 RaisedButton(
-                  child: Text('<= Back'),
+                  child: Text('Home'),
                   onPressed:(){
                     Navigator.push(context,
                       MaterialPageRoute(builder: (context)=> Home()),
@@ -173,4 +179,95 @@ class CurrentTasks extends StatelessWidget {
     }
 }
 
+class EnterTask extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Personal Calender',
+          style: TextStyle(fontFamily: 'Liu'),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.lightGreenAccent,
+      ),
+      body: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Text('Task Name:'),
+              Container(
+                width: 200,
+                height: 30,
+                child: TextField(
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.cyan,
+                      border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Text('Enter due date in the form mm-dd-year:'),
+              Container(
+                width: 100,
+                height: 40,
+                child: TextField(
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.cyan,
+                  border: InputBorder.none,
+                  hintText: '01-01-2020'
+                ),
+              ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Text('Allocate Time:'),
+              Container(
+                width: 200,
+                  height: 40,
+                  child: TextField(
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: Colors.cyan,
+                  hintText: 'Time required for task'
+                ),
+               )
+              ),
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              RaisedButton(
+                child: Text('Home'),
+                onPressed:(){
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context)=> Home()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
 
+class NextTask extends StatelessWidget{
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+
+    );
+  }
+}
+class EmptyCalendar{
+  
+}
